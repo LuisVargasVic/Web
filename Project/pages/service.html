@@ -11,10 +11,10 @@
     <title>Help Meowt!</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/small-business.css" rel="stylesheet">
+    <link href="../css/thumbnail-gallery.css" rel="stylesheet">
 
   </head>
 
@@ -29,16 +29,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="service.html" href="#">Services</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="">Services
+                <span class="sr-only">(current)</span>
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
@@ -51,25 +51,35 @@
     <!-- Page Content -->
     <div class="container">
 
-      <!-- Heading Row -->
-      <div class="row my-4">
-        <div class="col-lg-8">
-          <img class="img-fluid rounded" src="cat.jpg" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>What is it?</h1>
-          <p>Cats have been our companions for centuries, yet we’ve only just begun to unravel (like a ball of yarn!) the complex and diverse genetics that contribute to their health and behavior. We’ll need cat owners’ understanding and expertise to launch this project soon!</p>
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
-      <!-- /.row -->
+      <h1 class="my-4 text-center">Add Cat</h1>
 
-      <!-- Call to Action Well -->
-      <div class="card text-white bg-secondary my-4 text-center">
-      </div>
-
-      <!-- Content Row -->
+        <form  class="form-row" method="post" action="/login">
+            <div class="col-lg-12 col-md-12 col-xl-12">
+                <label class="col-lg-5" for="cat_name">Name of the cat: </label>
+                <input class="col-lg-5"  type="text" id="cat_name" name="cat_name">
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-5" for="breed">Cat's breed: </label>
+                <input class="col-lg-5" type="text" id="breed" name="breed">
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-5" for="age">Age</label>
+                <input class="col-lg-5" type="number" id="age" name="age">
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-5" for="weight">Weight</label>
+                <input class="col-lg-5" type="number" id="weight" name="weight">
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-5" for="length">Length</label>
+                <input class="col-lg-5" type="number" id="length" name="length">
+            </div>
+            <div class="col-lg-12" >
+                <button class="btn btn-primary btn-toolbar float-right" type="submit">Send your cat</button>
+            </div>
+        </form>
+      
+        <!-- Content Row -->
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="card h-100">
@@ -110,7 +120,6 @@
 
       </div>
       <!-- /.row -->
-
     </div>
     <!-- /.container -->
 
@@ -123,8 +132,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
 
