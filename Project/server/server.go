@@ -20,6 +20,14 @@ func showService(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "../pages/service.html")
 }
 
+func showLogIn(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "../pages/login.html")
+}
+
+func showRegister(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "../pages/register.html")
+}
+
 func main() {
 	css := http.FileServer(http.Dir("../css"))
 	http.Handle("/css/", http.StripPrefix("/css/", css))
@@ -33,7 +41,8 @@ func main() {
 	http.HandleFunc("/about", showAbout)
 	http.HandleFunc("/catalog", showCatalog)
 	http.HandleFunc("/service", showService)
+	http.HandleFunc("/login", showLogIn)
+	http.HandleFunc("/register", showRegister)
 	http.ListenAndServe(":8080", nil)
-	
 
 }
