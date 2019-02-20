@@ -1,5 +1,5 @@
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
- <!-- Bootstrap core JavaScript -->
+<!-- Bootstrap core JavaScript -->
 
 <!-- Custom styles for this template -->
 <link href="../css/login.css" rel="stylesheet">
@@ -9,31 +9,86 @@
 
 <!-- no additional media querie or css is required -->
 <div class="container">
-        <div class="row justify-content-center align-items-center" style="height:100vh">
-            <div class="col-5">
-                <h1>Sign up to Help Meowt!</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <form action="" autocomplete="off">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="name" placeholder="Name" >
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" name="username" placeholder="Username (display name)">
-                            </div>
-                            <div class="form-group">
-                                    <input type="text" class="form-control" name="password" placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="passwordconfirmation" placeholder="Confirm password">
-                            </div>
-                           <a href="login"><button type="button" id="sendlogin" class="btn btn-primary">Sign Up</button></a>
-                           <br><br>
-                           <p>Already have an account?</p>
-                           <a href="login"><button type="button" id="sendlogin" class="btn btn-primary">Log In</button></a>
-                        </form>
-                    </div>
+    <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-5">
+            <h1>Sign up to Help Meowt!</h1>
+            <div class="card">
+                <div class="card-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="Username (display name)" >
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="confirm" placeholder="Confirm password">
+                        </div>
+                        <button type="button" id="sendRegister" class="btn btn-primary">Sign Up</button></a>
+                        <br><br>
+                        <p>Already have an account?</p>
+                        <a href="login"><button type="button" id="sendlogin" class="btn btn-primary">Log In</button></a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-auth.js"></script>
+
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBBOCM6de5R1Vv1x2SXFBJ1fWJ3Q5MZU5Q",
+        authDomain: "helpmeowt-2019.firebaseapp.com",
+        databaseURL: "https://helpmeowt-2019.firebaseio.com",
+        projectId: "helpmeowt-2019",
+        storageBucket: "helpmeowt-2019.appspot.com",
+        messagingSenderId: "962267925087"
+    };
+    firebase.initializeApp(config);
+
+    function register(){
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirm = document.getElementById('confirm').value;
+        if (email.length < 4) {
+            alert('Please enter an email address.');
+            return;
+        }
+        if (password.length < 4) {
+            alert('Please enter a strong password.');
+            return;
+        }
+        if (password != confirm) {
+            alert('Password most be equal.');
+            return;
+        }
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
+            console.log('everything went fine');
+            console.log('user object:' + user);
+            window.location = "/index";
+            //you can save the user data here.
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // [START_EXCLUDE]
+            alert(errorMessage);
+            console.log(error);
+            // [END_EXCLUDE]
+        });
+    }
+
+    function initApp(){
+        document.getElementById('sendRegister').addEventListener('click', register);
+    }
+
+    window.onload = function() {
+        initApp();
+    }
+    
+</script>

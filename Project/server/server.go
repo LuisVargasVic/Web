@@ -4,6 +4,10 @@ import (
 	"net/http"
 )
 
+func showLogin(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "../pages/login.html")
+}
+
 func showIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "../pages/index.html")
 }
@@ -20,10 +24,6 @@ func showService(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "../pages/service.html")
 }
 
-func showLogIn(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "../pages/login.html")
-}
-
 func showRegister(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "../pages/register.html")
 }
@@ -37,11 +37,11 @@ func main() {
 	http.Handle("/img/", http.StripPrefix("/img/", im))
 	pg := http.FileServer(http.Dir("../pages"))
 	http.Handle("/pages/", http.StripPrefix("/pages/", pg))
+	http.HandleFunc("/login", showLogin)
 	http.HandleFunc("/index", showIndex)
 	http.HandleFunc("/about", showAbout)
 	http.HandleFunc("/catalog", showCatalog)
 	http.HandleFunc("/service", showService)
-	http.HandleFunc("/login", showLogIn)
 	http.HandleFunc("/register", showRegister)
 	http.ListenAndServe(":8080", nil)
 
