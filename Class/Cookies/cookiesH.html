@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cookies class</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width", initial-scale=1.0"/>
+</head>
+  	<body>
+        <div id="lugardetrabajo">
+        </div>
+
+        <select id="contry">
+            <option value="México">Mexico</option>
+            <option value="eua">EUA</option>
+            <option value="canada">Canada</option>
+        </select>
+        <button onclick="colocarCookie()">Cookie</button>
+        <select id="idioma2">
+            <option value="esp">Español</option>
+            <option value="eng">Ingles</option>
+            <option value="fre">Frances</option>
+        </select>
+        <button onclick="checkCookie()">Revisar cookie</button>
+            <button onclick="storage()">local storage</button>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+
+            function colocarCookie(){
+                var d = new Date();
+                var e=document.getElementById("contry");;
+                var strUser = e.options[e.selectedIndex].value;
+                d.setTime(d.getTime() + (5*24*60*60*1000));
+                var expires = "expires="+ d.toUTCString();
+                document.cookie = "contry" + "=" + strUser + ";" + expires + ";path=/";
+
+            }
+            function getCookie() {
+                var name = "contry" + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                var cont = getCookie();
+                if (cont != "") {
+                    alert("El pais seleccionado fue " + cont);
+                }else {
+                    cont = prompt("Ingresa tu pais:", "");
+                    if (cont != "" && cont != null) {
+                        var d = new Date();
+                        d.setTime(d.getTime() + (5*24*60*60*1000));
+                        var expires = "expires="+ d.toUTCString();
+                        document.cookie = "contry" + "=" + cont + ";" + expires + ";path=/";
+                    }
+                }
+
+            }
+            function storage(){
+                if (window.XMLHttpRequest) {
+                    xmlhttp=new XMLHttpRequest();
+                }
+                else {
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                var e;
+                var strUser;
+                xmlhttp.onreadystatechange=function(){
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    }
+                }
+                e = document.getElementById("idioma2");
+                strUser = e.options[e.selectedIndex].value;
+                localStorage.setItem("idioma",strUser);
+                xmlhttp.open("POST","storage",true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("ajax_post_data"+"="+localStorage.getItem("idioma"));
+            }
+        </script>
+	</body>
+</html>
