@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Deliver</title>
+
+</head>
+
+<body>
+
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+    <script type="text/javascript">
+        let xhr=new XMLHttpRequest();
+        let url = "http://demo3599821.mockable.io/web";
+
+        xhr.onreadystatechange=function(){
+            if(this.status==200&&this.readyState==4){
+                let data = JSON.parse(this.responseText);
+                console.log(data);
+            }
+        };
+        xhr.open("GET", url);
+        xhr.send();
+
+        $.getJSON(url, function(json){
+            var alumnos = json.data.alumnos
+            alumnos.forEach(function(alumno) {
+                console.log(alumno.nombre);
+            })
+        });
+
+        fetch(url).then(response => {
+        return response.json();
+        }).then(data => {
+            // Work with JSON data
+            var alumnos = data.data.alumnos
+            // Display each person details
+            alumnos.forEach(function(alumno) {
+                console.log("Tipo: %s \n", alumno.perfil);
+            })
+        }).catch(err => {
+        // Print error, if any
+        console.log(err)
+        });
+
+        axios.get(url).then(function (response) {
+            var alumnos = response.data.data.alumnos   
+            alumnos.forEach(function(alumno) {
+                console.log("Calificacion: %s \n", alumno.calificacion);
+            })
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nobel</title>
+  
+  <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+    <script type="text/javascript">
+        let xhr=new XMLHttpRequest();
+        let urlnobel = "http://api.nobelprize.org/v1/laureate.json?bornCountryCode=mx";
+  
+        xhr.onreadystatechange=function(){
+            if(this.status==200&&this.readyState==4){
+                let data=JSON.parse(this.responseText);
+                console.log(data);
+            }
+        };
+        xhr.open("GET", urlnobel);
+        xhr.send();
+    </script>
+
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" >
+        let urlnobel = "http://api.nobelprize.org/v1/laureate.json?bornCountryCode=mx";
+
+        $.getJSON(urlnobel, function(json){
+            console.log(json);
+            console.log(json.laureates[2].firstname);
+        });
+    </script>
+
+    <script type="text/javascript">
+        var apiUrl = 'http://api.nobelprize.org/v1/prize.json?year=2018&yearTo=2019'
+
+        fetch(apiUrl).then(response => {
+        return response.json();
+        }).then(data => {
+            // Work with JSON data
+            var prizes = data.prizes
+            // Display each person details
+            prizes.forEach(function(prize) {
+                console.log("Year: %s \n", prize.year);
+            })
+        }).catch(err => {
+        // Print error, if any
+        console.log(err)
+        });
+    
+    </script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+    <script type="text/javascript">
+        var axiosUrl = 'http://api.nobelprize.org/v1/prize.json?year=2018&yearTo=2019'
+
+        axios.get(axiosUrl).then(function (response) {
+            var prizes = response.data.prizes   
+            prizes.forEach(function(prize) {
+                console.log("Year: %s \n", prize.year);
+            })
+        })
+  
+    </script>
+
+</body>
+
+</html>
