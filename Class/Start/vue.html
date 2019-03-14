@@ -9,6 +9,30 @@
   	<body>
       <div id="lugardetrabajo">
           {{megustoroma}}
+          <p>{{alumnos}}</p>
+          <p>{{directores}}</p>
+          <p>{{persona}}</p>
+          <p>{{humanos}}</p>
+          <div v-for="persona in humanos"> 
+            <p v-on:click="alert">{{persona.nombre}}</p>
+            <p v-on:click="persona.edad *= 2">{{persona.edad}}</p>
+          </div>
+          <table style="width:100%"> 
+              <tr> 
+                  <th>Nombre</th> 
+                  <th>Matricula</th>  
+                  <th>Edad</th>  
+              </tr> 
+              <tr v-for="persona in humanos"> 
+                  <th v-if="persona.edad == 23">{{persona.nombre}}</th> 
+                  <th v-if="persona.edad == 23">{{persona.matricula}}</th>  
+                  <th v-if="persona.edad == 23">{{persona.edad}}</th>  
+              </tr>
+              <tr v-for="persona in humanos"> 
+                  <th v-on:click="showLast(persona.apellido)">{{persona.nombre}}</th> 
+                  <th>{{persona.matricula}}</th>  
+                  <th>{{persona.edad}}</th>  
+              </tr>
       </div>
          
           
@@ -22,7 +46,49 @@
                 const app= new Vue({
                     el: '#lugardetrabajo',
                     data: {
-                        megustoroma:'no'
+                        megustoroma:'no',
+                        alumnos: '17',
+                        directores: [
+                          'Del Toro', 'Cuarón'
+                        ],
+                        persona: {
+                          nombre: "Luis",
+                          matricula: "A01630086",
+                          edad: 22
+                        },
+                        humanos: [
+                        {
+                          nombre: "Luis",
+                          matricula: "A01630086",
+                          edad: 22
+                        },
+                        {
+                          nombre: "Mario",
+                          apellido: "Carrillo",
+                          matricula: "A01623123",
+                          edad: 24
+                        },
+                        {
+                          nombre: "Yorch",
+                          apellido: "Padilla",
+                          matricula: "A01212331",
+                          edad: 23
+                        },
+                        {
+                          nombre: "Carlos",
+                          apellido: "Pedraza",
+                          matricula: "A01213451",
+                          edad: 21
+                        },
+                        ]
+                    },
+                    methods: {
+                      alert: function(event){
+                        alert("Hello")
+                      },
+                      showLast: function(string){
+                        alert(string)
+                      }
                     }
                 })
                 // Storing data:
