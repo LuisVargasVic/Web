@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="css/flip.css" rel="stylesheet">
 
   </head>
 
@@ -39,7 +40,7 @@
               <a class="nav-link" href="/service">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="/contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -55,37 +56,105 @@
 
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/russian-blue.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                  <div class="front">
+                      <img class="img-fluid img-thumbnail" src="/img/russian-blue.jpg" alt="">
+                  </div>
+                  <div class="back">
+                    <p>Russian Blue</p>
+                    <p>The Russian Blue is gentle, quiet and even shy around strangers, she’ll follow you around and even ride on your shoulder.</p>
+                  </div>
+                </div>
+              </div>
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/persian-cat.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/persian-cat.jpg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Persian</p>
+                      <p>The docile Persian is a quiet feline who enjoys a calm and relaxing environment; however, persians are independent and selective in who they show affection to.</p>
+                    </div>
+                  </div>
+                </div>
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/siamese-cat.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/siamese-cat.jpg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Siamese</p>
+                      <p>Siamese Cats are incredibly social, intelligent and vocal—they’ll talk to anyone who wants to listen. Although they’re active and curious, they also love curling up on their human’s lap or snuggling up next to them in bed.</p>
+                    </div>
+                  </div>
+                </div>
+           
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
+            
             <img class="img-fluid img-thumbnail" src="/img/sphynx-cat.png" alt="">
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/balinese-cat.jpeg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/balinese-cat.jpeg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Balinese</p>
+                      
+                      <p>An easygoing breed with a clownlike personality, the Balinese adores people, though less vocal than a Siamese.</p>
+                    </div>
+                  </div>
+                </div>
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/scottish-fold-cat.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/scottish-fold-cat.jpg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Scottish fold</p>
+                      <p>The smart and friendly Scottish Fold loves playing with challenging, puzzling toys to test her intelligence. She also loves human interaction, though with moderation.</p>
+                    </div>
+                  </div>
+                </div>
+           
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/british-shorthair-cat.jpeg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/british-shorthair-cat.jpeg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>British shorthair</p>
+                      <p>The British Shorthair is an easygoing feline. She enjoys affection but isn’t needy and dislikes being carried. She’ll follow you from room to room, though, out of curiosity.</p>
+                    </div>
+                  </div>
+                </div>
+          
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
@@ -95,22 +164,55 @@
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/himalayan-cat.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/himalayan-cat.jpg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Himalayan</p>
+                      <p>The Himalayan Cat is a sweet and mild-tempered feline. She’s affectionate but selective. Although she loves lying in your lap and being pet, she may be reserved around guests.</p>
+                    </div>
+                  </div>
+                </div>
+  
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/snowshoe.jpg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/snowshoe.jpg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Snowshoe</p>
+                      <p>This sweet-natured, lively cat is inquisitive and loves being the center of attention. A devoted, affectionate feline, the Snowshoe follows her human companions everywhere, purring with delight.</p>
+                    </div>
+                  </div>
+                </div>
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/bengal-cat.jpg" alt="">
+              <img class="img-fluid img-thumbnail" src="/img/bengal-cat.jpg" alt="">
+      
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-6">
           <a href="#" class="d-block mb-4 h-100">
-            <img class="img-fluid img-thumbnail" src="/img/toyger-cat.jpeg" alt="">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                  <div class="flipper">
+                    <div class="front">
+                        <img class="img-fluid img-thumbnail" src="/img/toyger-cat.jpeg" alt="">
+                    </div>
+                    <div class="back">
+                      <p>Toyger</p>
+                      <p>This breed has a friendly, outgoing temperament and delights in being with people, even strangers, and gets along well with other pets.</p>
+                    </div>
+                  </div>
+                </div>
+          
           </a>
         </div>
       </div>
