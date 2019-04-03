@@ -60,7 +60,6 @@
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
             console.log('everything went fine');
             console.log('user object:' + user.uid);
-            setCookie(user)
             window.location = "/index";
             //you can save the user data here.
         }).catch(function(error) {
@@ -72,14 +71,6 @@
             console.log(error);
             // [END_EXCLUDE]
         });
-    }
-
-    function setCookie(user){
-        var d = new Date();
-        d.setTime(d.getTime() + (5*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
-        document.cookie = "user" + "=" + user + ";" + expires + ";path=/";
-        console.log(document.cookie);
     }
 
     function initApp(){
