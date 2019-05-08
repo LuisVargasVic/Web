@@ -42,6 +42,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
+            <li class="nav-item hidden" id="cats">
+              <a class="nav-link" href="/cats">Cats</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -85,11 +88,14 @@
             </div>
 
             <div class="col-lg-12" >
-                <br><br>
                 <button id="sendCat" class="btn btn-primary btn-toolbar float-right" >Send your cat</button>
-                <br><br><br><br><br>
+                <br><br>
             </div>
-      
+            
+      <!-- Call to Action Well -->
+      <div class="card text-white bg-secondary my-4 text-center">
+      </div>
+
         <!-- Content Row -->
       <div class="row">
         <div class="col-md-4 mb-4">
@@ -111,7 +117,7 @@
               <p class="card-text">You can help us by taking a look at these mixed cats and try to identify the breeds that run through the cats' DNA.</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              <a href="/login" class="btn btn-primary-green">Login</a>
             </div>
           </div>
         </div>
@@ -123,7 +129,7 @@
               <p class="card-text">For more information, you can reach us by e-mail.</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              <a href="#" id="logout" class="btn btn-primary-red">Logout</a>
             </div>
           </div>
         </div>
@@ -226,7 +232,7 @@
 
             // Write the new post's data simultaneously in the posts list and the user's post list.
             var updates = {};
-            updates['/users/' + user.uid + '/' + newPostKey] = postCat;
+            updates['/users/' + user.uid + '/cats/' + newPostKey] = postCat;
             alert("Is the information correct?")
             return firebase.database().ref().update(updates);
           } else {
@@ -238,12 +244,34 @@
       }
       function initApp(){
         document.getElementById('sendCat').addEventListener('click', writeNewCat);
+        document.getElementById('logout').addEventListener('click', logout);
       }
 
       window.onload = function() {
         initApp();
+        show();
       }
 
+      function logout() {
+        firebase.auth().signOut().then(function() {
+          window.location = "/login"
+        }).catch(function(error) {
+          // An error happened.
+        });
+      }
+
+      function show() {
+        var x = document.getElementById("cats");
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            console.log("user id: " + firebase.uid);
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+            console.log("user id: " + firebase.uid);
+          }
+        });
+      }
       
     </script>
 

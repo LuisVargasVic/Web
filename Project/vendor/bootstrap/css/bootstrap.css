@@ -2188,6 +2188,10 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   display: block;
 }
 
+.hidden {
+  display: none;
+}
+
 .was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
   color: #dc3545;
 }
@@ -2364,6 +2368,18 @@ fieldset:disabled a.btn {
 .btn-primary {
   color: #fff;
   background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary-red {
+  color: #fff;
+  background-color: #DE1738;
+  border-color: #007bff;
+}
+
+.btn-primary-green {
+  color: #fff;
+  background-color: #136207;
   border-color: #007bff;
 }
 

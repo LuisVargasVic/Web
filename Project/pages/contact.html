@@ -35,13 +35,16 @@
             <li class="nav-item">
               <a class="nav-link" href="/about">About</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/service">Services</a>
+            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="">Services
+              <a class="nav-link" href="/contact">Contact
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">Contact</a>
+            <li class="nav-item hidden" id="cats">
+              <a class="nav-link" href="/cats">Cats</a>
             </li>
           </ul>
         </div>
@@ -53,34 +56,156 @@
 
       <h1 class="my-4 text-center">Contact Us</h1>
 
-        <form  class="form-row" method="post" action="/login">
-            <div class="col-lg-12 col-md-12 col-xl-12">
-                <label class="col-lg-5" for="subject">Subject: </label>
-                <input class="col-lg-5"  type="text" id="subject" name="subject">
-            </div>
-            <div class="col-lg-12">
-                <label class="col-lg-5" for="message">Message: </label>
-                
-                <input class="col-lg-5 rw-lg-10"  type="text" id="message" name="message">
-            </div>
-      
-            <div class="col-lg-12" >
-                <br><br>
-                <button class="btn btn-primary btn-toolbar float-right" type="submit">Send</button>
-                <br><br><br><br><br>
-            </div>
-        </form>
-      
-        <!-- Content Row -->
-      
-        <!-- /.col-md-4 -->
-        
-       
+      <div class="col-lg-12">
+          <label class="col-lg-5" for="subject">Subject</label>
+          <input class="col-lg-5" type="text" id="subject" name="subject">
+      </div>
+      <div class="col-lg-12">
+          <label class="col-lg-5" for="message">Message</label>
+          <input class="col-lg-5" type="text" id="message" name="message">
+      </div>
 
+      <div class="col-lg-12" >
+          <br><br>
+          <button id="sendEmail" class="btn btn-primary btn-toolbar float-right" >Send e-mail</button>
+          <br><br><br><br><br><br><br><br><br>
+      </div>
+    
+      <!-- Call to Action Well -->
+      <div class="card text-white bg-secondary my-4 text-center">
+      </div>
+
+        <!-- Content Row -->
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">CATalog</h2>
+              <p class="card-text">There is an incredibly huge amount of different cat breeds out there. Click below to check them out!</p>
+            </div>
+            <div class="card-footer">
+              <a href="/catalog" class="btn btn-primary">More Info</a>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Contribute</h2>
+              <p class="card-text">You can help us by taking a look at these mixed cats and try to identify the breeds that run through the cats' DNA.</p>
+            </div>
+            <div class="card-footer">
+              <a href="/login" class="btn btn-primary-green">Login</a>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Contact Us</h2>
+              <p class="card-text">For more information, you can reach us by e-mail.</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" id="logout" class="btn btn-primary-red">Logout</a>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-4 -->
       </div>
       <!-- /.row -->
     </div>
     <!-- /.container -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBBOCM6de5R1Vv1x2SXFBJ1fWJ3Q5MZU5Q",
+        authDomain: "helpmeowt-2019.firebaseapp.com",
+        databaseURL: "https://helpmeowt-2019.firebaseio.com",
+        projectId: "helpmeowt-2019",
+        storageBucket: "helpmeowt-2019.appspot.com",
+        messagingSenderId: "962267925087"
+      };
+      firebase.initializeApp(config);
+      if (firebase.auth().currentUser !== null) 
+        console.log("user id: " + firebase.auth().currentUser.uid);
+
+      window.onload = function() {
+        initApp();
+        show();
+      }
+
+      function sendEmail() {
+        var subject = document.getElementById('subject').value;
+        var message = document.getElementById('message').value;
+        if (subject.length == 0) {
+            alert('Please enter the subject.');
+            return;
+        }
+        if (message.length == 0) {
+            alert('Please enter the message.');
+            return;
+        }
+        // A post entry.
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            // User logged in already or has just logged in.
+            console.log(user.uid);
+            var postMessage = {
+              subject: subject,
+              message: message
+            };
+
+            // Get a key for a new Post.
+            var newPostKey = firebase.database().ref().child('message').push().key;
+
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            var updates = {};
+            updates['/users/' + user.uid + '/message/' + newPostKey] = postMessage;
+            alert("Is the information correct?")
+            return firebase.database().ref().update(updates);
+            window.location = "/index"
+          } else {
+            alert("Must login and then send message, if you don't have an account register")
+            window.location = "/login";
+          }
+        });
+      }
+
+      function initApp(){
+        document.getElementById('logout').addEventListener('click', logout);
+        document.getElementById('sendEmail').addEventListener('click', sendEmail);
+      }
+
+      function logout() {
+        alert("HERE")
+        firebase.auth().signOut().then(function() {
+          window.location = "/login"
+        }).catch(function(error) {
+          // An error happened.
+        });
+      }
+
+      function show() {
+        var x = document.getElementById("cats");
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            console.log("user id: " + firebase.uid);
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+            console.log("user id: " + firebase.uid);
+          }
+        });
+      }
+      
+    </script>
 
     <!-- Footer -->
     <br><br><br><br><br><br><br><br><br><br><br>

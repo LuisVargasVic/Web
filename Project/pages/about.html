@@ -11,7 +11,7 @@
     <title>Help Meowt!</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/small-business.css" rel="stylesheet">
@@ -42,6 +42,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
+            </li>
+            <li class="nav-item hidden" id="cats">
+              <a class="nav-link" href="/cats">Cats</a>
             </li>
           </ul>
         </div>
@@ -86,7 +89,7 @@
               <p class="card-text">You can help us by taking a look at these mixed cats and try to identify the breeds that run through the cats' DNA.</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              <a href="/login" class="btn btn-primary-green">Login</a>
             </div>
           </div>
         </div>
@@ -98,7 +101,7 @@
               <p class="card-text">For more information, you can reach us by e-mail.</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              <a href="#" id="logout" class="btn btn-primary-red">Logout</a>
             </div>
           </div>
         </div>
@@ -110,6 +113,54 @@
     </div>
     <!-- /.container -->
 
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-auth.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBBOCM6de5R1Vv1x2SXFBJ1fWJ3Q5MZU5Q",
+        authDomain: "helpmeowt-2019.firebaseapp.com",
+        databaseURL: "https://helpmeowt-2019.firebaseio.com",
+        projectId: "helpmeowt-2019",
+        storageBucket: "helpmeowt-2019.appspot.com",
+        messagingSenderId: "962267925087"
+      };
+      firebase.initializeApp(config);
+      if (firebase.auth().currentUser !== null) 
+        console.log("user id: " + firebase.auth().currentUser.uid);
+
+      function initApp(){
+        document.getElementById('logout').addEventListener('click', logout);
+      }
+        
+      window.onload = function() {
+        initApp();
+        show();
+      }
+
+      function logout() {
+        firebase.auth().signOut().then(function() {
+          window.location = "/login"
+        }).catch(function(error) {
+          // An error happened.
+        });
+      }
+
+      function show() {
+        var x = document.getElementById("cats");
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            console.log("user id: " + firebase.uid);
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+            console.log("user id: " + firebase.uid);
+          }
+        });
+      }
+      
+    </script>
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">

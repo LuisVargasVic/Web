@@ -14,12 +14,12 @@
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/small-business.css" rel="stylesheet">
-
+    <link href="css/thumbnail-gallery.css" rel="stylesheet">
+    
   </head>
 
   <body>
-    <div id="container">
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
       <div class="container">
@@ -29,22 +29,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
+            <li class="nav-item">
+              <a class="nav-link" href="/index">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/about" >About</a>
+              <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/service" href="#">Services</a>
+              <a class="nav-link" href="/service">Services</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
-            <li class="nav-item hidden" id="cats">
-              <a class="nav-link" href="/cats">Cats</a>
+            <li class="nav-item active" id="cats">
+              <a class="nav-link" href="/cats">Cats
+                <span class="sr-only">(current)</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -54,25 +54,24 @@
     <!-- Page Content -->
     <div class="container">
 
-      <!-- Heading Row -->
-      <div class="row my-4">
-        <div class="col-lg-8">
-          <img class="img-fluid rounded" src="../img/cat.jpg" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>What is it?</h1>
-          <p>Cats have been our companions for centuries, yet we’ve only just begun to unravel (like a ball of yarn!) the complex and diverse genetics that contribute to their health and behavior. We’ll need cat owners’ understanding and expertise to launch this project soon!</p>
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
-      <!-- /.row -->
-
+      <h1 class="my-4 text-center">Cats</h1>
+      <table style="width:100%" id="ex-table">
+            <tr id="tr">
+              <th>Cat name:</th>
+              <th>Breed:</th> 
+              <th>Age:</th>
+              <th>Weight:</th>
+              <th>Length:</th>
+              <th>Coat:</th>
+              <th>Color:</th>
+              <th>Nature:</th>
+           </table> 
+    
       <!-- Call to Action Well -->
       <div class="card text-white bg-secondary my-4 text-center">
       </div>
 
-      <!-- Content Row -->
+        <!-- Content Row -->
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="card h-100">
@@ -110,16 +109,15 @@
           </div>
         </div>
         <!-- /.col-md-4 -->
-
       </div>
       <!-- /.row -->
-
     </div>
     <!-- /.container -->
 
     <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
     <script>
       // Initialize Firebase
       var config = {
@@ -134,13 +132,80 @@
       if (firebase.auth().currentUser !== null) 
         console.log("user id: " + firebase.auth().currentUser.uid);
 
-      function initApp(){
-        document.getElementById('logout').addEventListener('click', logout);
-      }
-        
       window.onload = function() {
         initApp();
-        show();
+      }
+
+      function getCats() {
+        
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            // User logged in already or has just logged in.
+            var userDataRef = firebase.database().ref("users/" + user.uid + "/cats").orderByKey();
+            userDataRef.once("value").then(function(snapshot) {
+                if(snapshot.exists()){
+                    var content = '';
+                    snapshot.forEach(function(data){
+                        var val = data.val();
+                        content +='<tr>';
+                        content +='<td class="hidden">' + data.key + '</td>';
+                        content += '<td>' + val.catName + '</td>';
+                        content += '<td>' + val.breed + '</td>';
+                        content += '<td>' + val.age + '</td>';
+                        content += '<td>' + val.weight + '</td>';
+                        content += '<td>' + val.length + '</td>';
+                        content += '<td>' + val.coat + '</td>';
+                        content += '<td>' + val.color + '</td>';
+                        content += '<td>' + val.nature + '</td>';
+                        content += '</tr>';
+
+                    });
+                    $('#ex-table').append(content);
+                    addRowHandlers()
+                }
+            });
+          }
+        });
+      }
+
+      function addRowHandlers() {
+        var table = document.getElementById("ex-table");
+        var rows = table.getElementsByTagName("tr");
+        for (i = 0; i < rows.length; i++) {
+            var currentRow = table.rows[i];
+            var createClickHandler = function(row) {
+                return function() {
+                    var cell = row.getElementsByTagName("td")[0];
+                    var key = cell.innerHTML;
+                    deleteCat(key);
+                };
+            };
+            currentRow.onclick = createClickHandler(currentRow);
+        }
+      }
+
+      function deleteCat(key) {
+        console.log(key)
+        if (confirm("Delete!")) {
+            confirmDelete(key)
+        } 
+      }
+
+      function confirmDelete(key){
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            firebase.database().ref().child('/users/' + user.uid + '/cats/' + key).remove();
+            return window.location = "/cats";
+          } else {
+            alert("Must login and then send your cat if you don't have an account register")
+            window.location = "/login";
+          }
+        });
+      }
+
+      function initApp(){
+        document.getElementById('logout').addEventListener('click', logout);
+        getCats();
       }
 
       function logout() {
@@ -150,30 +215,17 @@
           // An error happened.
         });
       }
-
-      function show() {
-        var x = document.getElementById("cats");
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            console.log("user id: " + firebase.uid);
-            x.style.display = "block";
-          } else {
-            x.style.display = "none";
-            console.log("user id: " + firebase.uid);
-          }
-        });
-      }
       
     </script>
 
     <!-- Footer -->
+    <br><br><br><br><br><br><br><br><br><br><br>
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Help Meowt!</p>
       </div>
       <!-- /.container -->
     </footer>
-  </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
